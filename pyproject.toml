@@ -1,0 +1,12 @@
+[tool.pytest.ini_options]
+markers = [
+    "integration: tests check connection with external services",
+]
+
+[tool.black]
+line-length = 88
+target_version = ['py36', 'py37']
+skip-string-normalization = true
+
+[tool.coverage.run]
+relative_files = true

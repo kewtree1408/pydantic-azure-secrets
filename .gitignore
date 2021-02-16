@@ -1,0 +1,15 @@
+.DS_Store
+.idea
+*.log
+tmp/
+.venv
+build/
+dist/
+
+*egg-info
+*.env
+*.pyc
+.tox
+
+*.xml
+.coverage

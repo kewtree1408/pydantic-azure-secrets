@@ -1,0 +1,40 @@
+name: Linters and Tests
+
+on: [push]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.6, 3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Set up python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install tox tox-gh-actions toml
+
+    - name: Tests
+      run: tox 
+      env: 
+        AZURE_CLIENT_ID: ${{ secrets.azure_client_id }}
+        AZURE_CLIENT_SECRET: ${{ secrets.azure_client_secret }}
+        AZURE_TENANT_ID: ${{ secrets.azure_tenant_id }}
+
+    - name: Publish Unit Test Results for ${{ matrix.python-version }}
+      uses: EnricoMi/publish-unit-test-result-action@v1.8
+      if: always()
+      with:
+        check_name: Unit Test Results ${{ matrix.python-version }}
+        comment_title: Unit Test Statistics ${{ matrix.python-version }}
+        files: tests.xml
+
