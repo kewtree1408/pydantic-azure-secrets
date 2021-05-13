@@ -33,7 +33,7 @@ setuptools.setup(
     ],
     python_requires=">=3.6",
     install_requires=[
-        "pydantic==1.7.3",
+        "pydantic==1.7.4",
         "python-dotenv==0.15.0",
         "azure-identity==1.5.0",
         "azure-keyvault-secrets==4.2.0",
